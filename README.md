@@ -20,28 +20,48 @@ Developed by Florian Bidabe / Photon Security ([www.photonsec.com.au](https://ww
 - ✅ Pure Ruby — no external gems required
 - 💻 Compatible with macOS, Linux, and Windows
 
-## 🔧 Prerequisites
 
-Make sure your system has:
+## 📥 Installation
 
-### ✅ Ruby
-Run to verify:
+### Option 1: Clone the Repository
 ```bash
-ruby -v
+git clone https://github.com/Enelass/video-to-gif.git
+cd video-to-gif
+npm install
 ```
 
-### ✅ FFmpeg
-Run to verify:
-```bash
-ffmpeg -version
-```
-
-If FFmpeg is not installed:
-- **macOS**: `brew install ffmpeg`
-- **Ubuntu/Debian**: `sudo apt install ffmpeg`
-- **Windows**: Download from [ffmpeg.org](https://ffmpeg.org/download.html)
+### Option 2: Download ZIP
+1. Download the ZIP file from [https://github.com/Enelass/video-to-gif/archive/refs/heads/main.zip](https://github.com/Enelass/video-to-gif/archive/refs/heads/main.zip)
+2. Extract the ZIP file to a location of your choice
+3. Open a terminal and navigate to the extracted directory
+4. Run `npm install` to install dependencies
 
 ## 🚀 Usage
+
+### Graphical User Interface
+
+The application includes an Electron-based GUI for easier use:
+
+1. Run the application:
+```bash
+npm start
+```
+
+1. For development mode with live reload:
+```bash
+npm run dev
+```
+
+The GUI provides:
+- Drag and drop interface for video files
+- Real-time conversion progress with console output
+- Side-by-side comparison of all GIF versions
+- Interactive size comparison chart
+- Preview of the original video and all GIF versions
+- Detailed metadata display (dimensions, FPS, color depth, etc.)
+- Size comparison between original video and all GIF versions
+- Tabbed interface to view details of each version
+
 
 ### Command Line Interface
 
@@ -69,45 +89,55 @@ You can also convert a specific video file by passing it as an argument:
 ./video2gif.rb path/to/video.mp4
 ```
 
-### Graphical User Interface
+## 🔧 Prerequisites
 
-The application also includes an Electron-based GUI for easier use:
+Make sure your system has:
 
-1. Install dependencies:
+### ✅ Ruby
+Run to verify:
 ```bash
-npm install
+ruby -v
 ```
 
-2. Run the application:
+### ✅ FFmpeg
+Run to verify:
 ```bash
-npm start
+ffmpeg -version
 ```
 
-3. For development mode with live reload:
-```bash
-npm run dev
-```
+If FFmpeg is not installed:
+- **macOS**: `brew install ffmpeg`
+- **Ubuntu/Debian**: `sudo apt install ffmpeg`
+- **Windows**: Download from [ffmpeg.org](https://ffmpeg.org/download.html)
 
-The GUI provides:
-- Drag and drop interface for video files
-- Real-time conversion progress with console output
-- Side-by-side comparison of all GIF versions
-- Interactive size comparison chart
-- Preview of the original video and all GIF versions
-- Detailed metadata display (dimensions, FPS, color depth, etc.)
-- Size comparison between original video and all GIF versions
-- Tabbed interface to view details of each version
+
 
 ## 🛠️ Customization
 
-You can modify the settings in the `config.json` file to adjust the output:
+You can modify the settings in the `config.json` file to adjust the output for each version:
 
 ```json
 {
-  "max_width": 1200,
-  "fps": 3,
-  "color_depth": 256,
-  "dither_method": "sierra2_4a",
+  "versions": {
+    "tiny": {
+      "max_width": 640,
+      "fps": 2,
+      "color_depth": 128,
+      "dither_method": "bayer"
+    },
+    "small": {
+      "max_width": 1280,
+      "fps": 2,
+      "color_depth": 160,
+      "dither_method": "sierra2_4a"
+    },
+    "medium": {
+      "max_width": 1980,
+      "fps": 3,
+      "color_depth": 256,
+      "dither_method": "sierra2_4a"
+    }
+  },
   "supported_video_extensions": [
     ".mp4", ".mkv", ".avi", ".mov", ".wmv", 
     ".flv", ".webm", ".m4v", ".3gp", ".mpg", ".mpeg"
