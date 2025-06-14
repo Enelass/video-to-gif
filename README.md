@@ -47,7 +47,9 @@ The application includes an Electron-based GUI for easier use:
 npm start
 ```
 
-1. For development mode with live reload:
+![Demo of the application](demo.gif)
+
+2. For development mode with live reload:
 ```bash
 npm run dev
 ```
