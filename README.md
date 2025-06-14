@@ -36,6 +36,8 @@ npm install
 3. Open a terminal and navigate to the extracted directory
 4. Run `npm install` to install dependencies
 
+> **Note:** The installation process will automatically check if Ruby and FFmpeg are installed on your system. If either is missing, you'll receive instructions on how to install them.
+
 ## 🚀 Usage
 
 ### Graphical User Interface

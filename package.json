@@ -7,12 +7,14 @@
     "start": "electron .",
     "dev": "electron . --dev",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "node check-dependencies.js || exit 0",
     "postinstall": "chmod +x video2gif.rb"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^4.1.2",
     "electron": "^36.4.0",
     "electron-reload": "^2.0.0-alpha.1"
   }
