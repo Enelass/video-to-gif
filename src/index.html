@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video to GIF Converter</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Video to GIF Converter</h1>
+      <p>Drop your video file or click to select</p>
+    </header>
+
+    <div id="drop-area" class="drop-area">
+      <div class="drop-message">
+        <img src="../assets/upload-icon.svg" alt="Upload" id="upload-icon">
+        <p>Drag & drop video here<br>or</p>
+        <button id="select-file-btn" class="btn primary">Select Video</button>
+      </div>
+    </div>
+
+    <div id="conversion-panel" class="panel hidden">
+      <div class="panel-header">
+        <h2>Converting Video to GIF</h2>
+        <button id="cancel-btn" class="btn secondary">Cancel</button>
+      </div>
+      
+      <div class="file-info">
+        <div class="file-preview">
+          <video id="video-preview" controls></video>
+        </div>
+        <div class="file-details">
+          <p><strong>File:</strong> <span id="file-name">filename.mp4</span></p>
+          <p><strong>Size:</strong> <span id="file-size">0 MB</span></p>
+          <p><strong>Duration:</strong> <span id="file-duration">00:00</span></p>
+        </div>
+      </div>
+      
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <p id="progress-text">Processing...</p>
+      </div>
+      
+      <div id="console-output" class="console-output">
+        <div class="console-header">
+          <h3>Console Output</h3>
+          <button id="toggle-console" class="btn text">Show/Hide</button>
+        </div>
+        <pre id="console-content"></pre>
+      </div>
+    </div>
+
+    <div id="result-panel" class="panel hidden">
+      <div class="panel-header">
+        <h2>Conversion Complete</h2>
+        <button id="new-conversion-btn" class="btn secondary">Convert Another</button>
+      </div>
+      
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="comparison">Comparison</button>
+        <button class="tab-btn" data-tab="tiny">Tiny</button>
+        <button class="tab-btn" data-tab="small">Small</button>
+        <button class="tab-btn" data-tab="medium">Medium</button>
+      </div>
+      
+      <div id="comparison-tab" class="tab-content active">
+        <h3>Size Comparison</h3>
+        <div class="comparison-chart">
+          <div class="chart-container">
+            <div class="chart-bar-container">
+              <div class="chart-label">Original</div>
+              <div class="chart-bar">
+                <div class="chart-bar-fill original" id="original-bar"></div>
+                <span class="chart-value" id="original-size-chart">0 MB</span>
+              </div>
+            </div>
+            <div class="chart-bar-container">
+              <div class="chart-label">Tiny</div>
+              <div class="chart-bar">
+                <div class="chart-bar-fill tiny" id="tiny-bar"></div>
+                <span class="chart-value" id="tiny-size-chart">0 MB</span>
+              </div>
+            </div>
+            <div class="chart-bar-container">
+              <div class="chart-label">Small</div>
+              <div class="chart-bar">
+                <div class="chart-bar-fill small" id="small-bar"></div>
+                <span class="chart-value" id="small-size-chart">0 MB</span>
+              </div>
+            </div>
+            <div class="chart-bar-container">
+              <div class="chart-label">Medium</div>
+              <div class="chart-bar">
+                <div class="chart-bar-fill medium" id="medium-bar"></div>
+                <span class="chart-value" id="medium-size-chart">0 MB</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="comparison-grid">
+          <div class="comparison-item">
+            <h4>Original Video</h4>
+            <video id="original-preview" controls></video>
+            <div class="comparison-details">
+              <p><strong>Size:</strong> <span id="original-size">0 MB</span></p>
+              <p><strong>Dimensions:</strong> <span id="original-dimensions">0x0</span></p>
+            </div>
+          </div>
+          <div class="comparison-item">
+            <h4>Tiny GIF</h4>
+            <img id="tiny-preview" alt="Tiny GIF Preview">
+            <div class="comparison-details">
+              <p><strong>Size:</strong> <span id="tiny-size">0 MB</span></p>
+              <p><strong>Reduction:</strong> <span id="tiny-reduction">0%</span></p>
+              <p><strong>Dimensions:</strong> <span id="tiny-dimensions">0x0</span></p>
+            </div>
+          </div>
+          <div class="comparison-item">
+            <h4>Small GIF</h4>
+            <img id="small-preview" alt="Small GIF Preview">
+            <div class="comparison-details">
+              <p><strong>Size:</strong> <span id="small-size">0 MB</span></p>
+              <p><strong>Reduction:</strong> <span id="small-reduction">0%</span></p>
+              <p><strong>Dimensions:</strong> <span id="small-dimensions">0x0</span></p>
+            </div>
+          </div>
+          <div class="comparison-item">
+            <h4>Medium GIF</h4>
+            <img id="medium-preview" alt="Medium GIF Preview">
+            <div class="comparison-details">
+              <p><strong>Size:</strong> <span id="medium-size">0 MB</span></p>
+              <p><strong>Reduction:</strong> <span id="medium-reduction">0%</span></p>
+              <p><strong>Dimensions:</strong> <span id="medium-dimensions">0x0</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="tiny-tab" class="tab-content">
+        <div class="result-container">
+          <div class="result-preview">
+            <img id="tiny-preview-large" alt="Tiny GIF Preview">
+          </div>
+          
+          <div class="result-details">
+            <div class="result-stats">
+              <div class="stat-item">
+                <span class="stat-label">Original Size</span>
+                <span id="original-size-tiny" class="stat-value">0 MB</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">GIF Size</span>
+                <span id="tiny-size-detail" class="stat-value">0 MB</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Size Reduction</span>
+                <span id="tiny-reduction-detail" class="stat-value">0%</span>
+              </div>
+            </div>
+            
+            <div class="metadata">
+              <h3>Metadata</h3>
+              <table>
+                <tr>
+                  <td>Dimensions:</td>
+                  <td id="tiny-dimensions-detail">0x0</td>
+                </tr>
+                <tr>
+                  <td>FPS:</td>
+                  <td id="tiny-fps">0</td>
+                </tr>
+                <tr>
+                  <td>Color Depth:</td>
+                  <td id="tiny-color-depth">0 colors</td>
+                </tr>
+                <tr>
+                  <td>Dither Method:</td>
+                  <td id="tiny-dither-method">none</td>
+                </tr>
+                <tr>
+                  <td>Path:</td>
+                  <td id="tiny-path">path/to/gif</td>
+                </tr>
+              </table>
+            </div>
+            
+            <div class="action-buttons">
+              <button id="open-tiny-btn" class="btn primary">Open GIF</button>
+              <button id="open-tiny-folder-btn" class="btn secondary">Open Folder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="small-tab" class="tab-content">
+        <div class="result-container">
+          <div class="result-preview">
+            <img id="small-preview-large" alt="Small GIF Preview">
+          </div>
+          
+          <div class="result-details">
+            <div class="result-stats">
+              <div class="stat-item">
+                <span class="stat-label">Original Size</span>
+                <span id="original-size-small" class="stat-value">0 MB</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">GIF Size</span>
+                <span id="small-size-detail" class="stat-value">0 MB</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Size Reduction</span>
+                <span id="small-reduction-detail" class="stat-value">0%</span>
+              </div>
+            </div>
+            
+            <div class="metadata">
+              <h3>Metadata</h3>
+              <table>
+                <tr>
+                  <td>Dimensions:</td>
+                  <td id="small-dimensions-detail">0x0</td>
+                </tr>
+                <tr>
+                  <td>FPS:</td>
+                  <td id="small-fps">0</td>
+                </tr>
+                <tr>
+                  <td>Color Depth:</td>
+                  <td id="small-color-depth">0 colors</td>
+                </tr>
+                <tr>
+                  <td>Dither Method:</td>
+                  <td id="small-dither-method">none</td>
+                </tr>
+                <tr>
+                  <td>Path:</td>
+                  <td id="small-path">path/to/gif</td>
+                </tr>
+              </table>
+            </div>
+            
+            <div class="action-buttons">
+              <button id="open-small-btn" class="btn primary">Open GIF</button>
+              <button id="open-small-folder-btn" class="btn secondary">Open Folder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="medium-tab" class="tab-content">
+        <div class="result-container">
+          <div class="result-preview">
+            <img id="medium-preview-large" alt="Medium GIF Preview">
+          </div>
+          
+          <div class="result-details">
+            <div class="result-stats">
+              <div class="stat-item">
+                <span class="stat-label">Original Size</span>
+                <span id="original-size-medium" class="stat-value">0 MB</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">GIF Size</span>
+                <span id="medium-size-detail" class="stat-value">0 MB</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Size Reduction</span>
+                <span id="medium-reduction-detail" class="stat-value">0%</span>
+              </div>
+            </div>
+            
+            <div class="metadata">
+              <h3>Metadata</h3>
+              <table>
+                <tr>
+                  <td>Dimensions:</td>
+                  <td id="medium-dimensions-detail">0x0</td>
+                </tr>
+                <tr>
+                  <td>FPS:</td>
+                  <td id="medium-fps">0</td>
+                </tr>
+                <tr>
+                  <td>Color Depth:</td>
+                  <td id="medium-color-depth">0 colors</td>
+                </tr>
+                <tr>
+                  <td>Dither Method:</td>
+                  <td id="medium-dither-method">none</td>
+                </tr>
+                <tr>
+                  <td>Path:</td>
+                  <td id="medium-path">path/to/gif</td>
+                </tr>
+              </table>
+            </div>
+            
+            <div class="action-buttons">
+              <button id="open-medium-btn" class="btn primary">Open GIF</button>
+              <button id="open-medium-folder-btn" class="btn secondary">Open Folder</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="error-panel" class="panel hidden">
+      <div class="panel-header error">
+        <h2>Conversion Failed</h2>
+        <button id="try-again-btn" class="btn secondary">Try Again</button>
+      </div>
+      
+      <div class="error-details">
+        <p id="error-message">An error occurred during conversion.</p>
+        <pre id="error-details"></pre>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Video to GIF Converter | Powered by FFmpeg | Developed by <a href="https://www.photonsec.com.au" target="_blank">Florian Bidabe / Photon Security</a></p>
+  </footer>
+
+  <script src="js/renderer.js"></script>
+</body>
+</html>

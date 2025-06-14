@@ -1,0 +1,35 @@
+{
+  "versions": {
+    "tiny": {
+      "max_width": 640,
+      "fps": 2,
+      "color_depth": 128,
+      "dither_method": "bayer"
+    },
+    "small": {
+      "max_width": 1280,
+      "fps": 2,
+      "color_depth": 160,
+      "dither_method": "sierra2_4a"
+    },
+    "medium": {
+      "max_width": 1980,
+      "fps": 3,
+      "color_depth": 256,
+      "dither_method": "sierra2_4a"
+    }
+  },
+  "supported_video_extensions": [
+    ".mp4",
+    ".mkv",
+    ".avi",
+    ".mov",
+    ".wmv",
+    ".flv",
+    ".webm",
+    ".m4v",
+    ".3gp",
+    ".mpg",
+    ".mpeg"
+  ]
+}
