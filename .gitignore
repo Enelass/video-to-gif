@@ -1,0 +1,49 @@
+# Client specific
+baseline.json
+.env
+html_reports/*
+roles/*
+logs/*
+.clinerules/*
+
+# Icon must end with two \r
+Icon
+# Thumbnails
+._*
+
+# macOS native encryption file
+._.DS_Store
+._.localized
+
+# Temporary files created by applications
+.TemporaryItems
+.fseventsd
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# macOS generated files
+._*
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+
+# Node and venv modules
+node_modules/
+.venv/
+
+# macOS Finder Thumbnails
+._*
+# macOS Quick Look
+.AppleDouble
+
+
+# VS Code exclusions
+.vscode/
+.history/
+
+# Swift Package Manager
+.build/
+.swiftpm/
