@@ -8,9 +8,11 @@
     "dev": "electron . --dev",
     "test": "echo \"Error: no test specified\" && exit 1",
     "preinstall": "node build/check-dependencies.js",
-    "postinstall": "chmod +x video2gif.rb",
+    "postinstall": "node -e \"if(process.platform!=='win32') require('child_process').execSync('chmod +x video2gif.rb')\"",
     "dist": "electron-builder",
     "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "dist:linux": "electron-builder --linux",
     "pack": "electron-builder --dir"
   },
   "keywords": [],
@@ -80,7 +82,7 @@
       ]
     },
     "win": {
-      "icon": "assets/icons/app-icon.png",
+      "icon": "assets/icons/icon.ico",
       "target": [
         "nsis"
       ]

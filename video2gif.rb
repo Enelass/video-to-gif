@@ -131,8 +131,8 @@ class Video2Gif
   
   
   def check_ffmpeg
-    stdout, stderr, status = Open3.capture3('which ffmpeg')
-    
+    stdout, stderr, status = Open3.capture3('ffmpeg -version')
+
     unless status.success?
       puts "❌ Error: FFmpeg is not installed or not in your PATH"
       puts "Please install FFmpeg and try again:"
@@ -141,8 +141,9 @@ class Video2Gif
       puts "  • Windows: Download from https://ffmpeg.org/download.html"
       exit 1
     end
-    
-    puts "✅ FFmpeg found: #{utf8_text(stdout.strip)}"
+
+    ffmpeg_line = stdout.lines.first&.strip || ''
+    puts "✅ FFmpeg found: #{utf8_text(ffmpeg_line)}"
   end
   
   def scan_videos
